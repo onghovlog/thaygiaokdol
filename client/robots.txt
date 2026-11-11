@@ -1,0 +1,15 @@
+# robots.txt - Thầy Giáo KDOL ("1 đơn hàng - 1 nụ cười")
+# https://thaygiaokdol.vn/
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dang-ky-thanh-cong.html
+
+# Sitemap index
+Sitemap: https://thaygiaokdol.vn/sitemap.xml
+

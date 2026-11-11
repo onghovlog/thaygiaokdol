@@ -1,0 +1,34 @@
+{
+  "name": "thay-giao-kdol",
+  "version": "1.0.0",
+  "description": "Website Thầy Giáo KDOL - Slogan: 1 đơn hàng - 1 nụ cười (Mobile-First 430px)",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "dev:frontend": "node server/dev-server.js",
+    "seed": "node server/scripts/seed.js",
+    "admin:setup": "node server/scripts/setup-admin.js"
+  },
+  "keywords": [
+    "thay-gia-kdol",
+    "kinh-doanh-online",
+    "1-don-hang-1-nu-cuoi",
+    "mobile-first",
+    "vanilla-js"
+  ],
+  "author": "Thầy Giáo KDOL",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "mongoose": "^9.12.1",
+    "multer": "^2.5.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.65.0"
+  }
+}

@@ -1,0 +1,87 @@
+/**
+ * Thầy Giáo KDOL - Design System & Variables
+ * Slogan: "1 đơn hàng - 1 nụ cười"
+ * Thiết kế tối giản, chuẩn mobile-only (max-width: 430px)
+ */
+
+:root {
+  /* Bảng màu chính theo yêu cầu */
+  --color-primary: #F37021;
+  --color-primary-hover: #DE5F12;
+  --color-primary-light: #FFF2EB;
+  
+  --color-secondary: #123FCB;
+  --color-secondary-hover: #0D2FA0;
+  --color-secondary-light: #EDF2FE;
+
+  /* Màu nền & Khung */
+  --color-desktop-bg: #F3F4F6;
+  --color-bg-white: #FFFFFF;
+  --color-bg-subtle: #F8FAFC;
+  --color-bg-accent: #F1F5F9;
+
+  /* Màu chữ */
+  --color-text-main: #20242B;
+  --color-text-secondary: #4A5568;
+  --color-text-muted: #718096;
+  --color-text-inverse: #FFFFFF;
+
+  /* Đường kẻ & Border (thay cho shadow) */
+  --color-border: #E2E8F0;
+  --color-border-focus: #CBD5E1;
+
+  /* Màu trạng thái */
+  --color-success: #15803D;
+  --color-success-bg: #DCFCE7;
+  --color-danger: #B91C1C;
+  --color-danger-bg: #FEE2E2;
+
+  /* Typography */
+  --font-family-base: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.8125rem;  /* 13px */
+  --font-size-base: 0.9375rem;/* 15px */
+  --font-size-md: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.75rem;   /* 28px */
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+
+  /* Khoảng cách & Kích thước */
+  --app-max-width: 430px;
+  --header-height: 60px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --bottom-bar-base-height: 60px;
+  --bottom-bar-height: calc(var(--bottom-bar-base-height) + var(--safe-area-bottom));
+  --page-padding-x: 16px;
+
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+
+  /* Bo góc tối giản */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Chuyển động nhẹ nhàng, không lạm dụng */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+}
+

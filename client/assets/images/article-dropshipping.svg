@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradDrop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC" />
+      <stop offset="100%" stop-color="#E2E8F0" stop-opacity="0.6" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bgGradDrop)" rx="12" />
+  <rect x="2" y="2" width="796" height="446" fill="none" stroke="#CBD5E1" stroke-width="2" rx="10" />
+
+  <rect x="36" y="32" width="160" height="32" rx="16" fill="#123FCB" />
+  <text x="116" y="53" font-family="'Be Vietnam Pro', sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">CHUỖI CUNG ỨNG</text>
+  <text x="764" y="54" font-family="'Be Vietnam Pro', sans-serif" font-size="14" font-weight="600" fill="#F37021" text-anchor="end">Vận hành Dropshipping</text>
+
+  <text x="400" y="115" font-family="'Be Vietnam Pro', sans-serif" font-size="24" font-weight="700" fill="#20242B" text-anchor="middle">QUY TRÌNH XỬ LÝ ĐƠN HÀNG DROPSHIPPING</text>
+  <text x="400" y="142" font-family="'Be Vietnam Pro', sans-serif" font-size="14" fill="#64748B" text-anchor="middle">Người bán tập trung tư vấn khách hàng - Kho trung tâm phụ trách đóng gói & giao vận</text>
+
+  <!-- 4 Bước ngang -->
+  <g transform="translate(40, 180)">
+    <!-- Bước 1 -->
+    <rect width="160" height="180" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" />
+    <circle cx="80" cy="45" r="22" fill="#EFF6FF" />
+    <text x="80" y="52" font-family="'Be Vietnam Pro', sans-serif" font-size="16" font-weight="700" fill="#123FCB" text-anchor="middle">1</text>
+    <text x="80" y="95" font-family="'Be Vietnam Pro', sans-serif" font-size="14" font-weight="700" fill="#20242B" text-anchor="middle">Khách đặt hàng</text>
+    <text x="80" y="125" font-family="'Be Vietnam Pro', sans-serif" font-size="11" fill="#64748B" text-anchor="middle">Tư vấn qua chat,</text>
+    <text x="80" y="142" font-family="'Be Vietnam Pro', sans-serif" font-size="11" fill="#64748B" text-anchor="middle">video hoặc hotline</text>
+  </g>
+
+  <g transform="translate(225, 180)">
+    <!-- Bước 2 -->
+    <rect width="160" height="180" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" />
+    <circle cx="80" cy="45" r="22" fill="#FFF7ED" />
+    <text x="80" y="52" font-family="'Be Vietnam Pro', sans-serif" font-size="16" font-weight="700" fill="#F37021" text-anchor="middle">2</text>
+    <text x="80" y="95" font-family="'Be Vietnam Pro', sans-serif" font-size="14" font-weight="700" fill="#20242B" text-anchor="middle">Lên đơn hệ thống</text>
+    <text x="80" y="125" font-family="'Be Vietnam Pro', sans-serif" font-size="11" fill="#64748B" text-anchor="middle">Nhập thông tin nhận,</text>
+    <text x="80" y="142" font-family="'Be Vietnam Pro', sans-serif" font-size="11" fill="#64748B" text-anchor="middle">kiểm tra tồn kho tự động</text>
+  </g>
+
+  <g transform="translate(410, 180)">
+    <!-- Bước 3 -->
+    <rect width="160" height="180" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" />
+    <circle cx="80" cy="45" r="22" fill="#F0FDF4" />
+    <text x="80" y="52" font-family="'Be Vietnam Pro', sans-serif" font-size="16" font-weight="700" fill="#16A34A" text-anchor="middle">3</text>
+    <text x="80" y="95" font-family="'Be Vietnam Pro', sans-serif" font-size="14" font-weight="700" fill="#20242B" text-anchor="middle">Kho đóng gói</text>
+    <text x="80" y="125" font-family="'Be Vietnam Pro', sans-serif" font-size="11" fill="#64748B" text-anchor="middle">Kiểm tra chính hãng,</text>
+    <text x="80" y="142" font-family="'Be Vietnam Pro', sans-serif" font-size="11" fill="#64748B" text-anchor="middle">dán mã vận đơn chuẩn</text>
+  </g>
+
+  <g transform="translate(595, 180)">
+    <!-- Bước 4 -->
+    <rect width="160" height="180" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" />
+    <circle cx="80" cy="45" r="22" fill="#FEF3C7" />
+    <text x="80" y="52" font-family="'Be Vietnam Pro', sans-serif" font-size="16" font-weight="700" fill="#D97706" text-anchor="middle">4</text>
+    <text x="80" y="95" font-family="'Be Vietnam Pro', sans-serif" font-size="14" font-weight="700" fill="#20242B" text-anchor="middle">Giao hàng tận nơi</text>
+    <text x="80" y="125" font-family="'Be Vietnam Pro', sans-serif" font-size="11" fill="#64748B" text-anchor="middle">Đơn vị vận chuyển giao,</text>
+    <text x="80" y="142" font-family="'Be Vietnam Pro', sans-serif" font-size="11" fill="#64748B" text-anchor="middle">hoa hồng ghi nhận</text>
+  </g>
+
+  <rect x="40" y="395" width="715" height="28" rx="6" fill="#FFFFFF" />
+  <text x="397" y="414" font-family="'Be Vietnam Pro', sans-serif" font-size="12" fill="#64748B" text-anchor="middle">Mô hình tinh gọn giúp giảm 90% áp lực tồn vốn và rủi ro lưu kho cho người bán</text>
+</svg>
+
