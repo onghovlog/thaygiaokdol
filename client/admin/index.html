@@ -656,7 +656,7 @@
               type="text" 
               id="banner-search-input" 
               class="form-control" 
-              placeholder="Tìm theo tiêu đề, alt..." 
+              placeholder="Tìm theo URL, vị trí..." 
               style="font-size: var(--font-size-xs); padding: 6px 10px;"
             >
             <select id="banner-filter-pos" class="form-select" style="width: auto; font-size: var(--font-size-xs); padding: 6px 10px;">
@@ -1011,69 +1011,11 @@
           <form id="banner-form">
             <input type="hidden" id="banner-id" name="id">
 
-            <div class="form-group">
-              <label class="form-label" for="banner-title">Tiêu đề Banner <span class="required">*</span></label>
-              <input type="text" id="banner-title" name="title" class="form-control" placeholder="Ví dụ: Khởi Nghiệp KDOL Tinh Gọn" required>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="banner-badge">Nhãn phụ (Badge)</label>
-              <input type="text" id="banner-badge" name="badge" class="form-control" placeholder="Ví dụ: Đồng Hành Thực Chiến">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="banner-subtitle">Mô tả phụ</label>
-              <textarea id="banner-subtitle" name="subtitle" class="form-control" rows="2" placeholder="Tóm tắt nội dung banner..."></textarea>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label class="form-label" for="banner-pos">Vị trí</label>
-                <select id="banner-pos" name="position" class="form-select">
-                  <option value="home_slider">Slider trang chủ</option>
-                  <option value="partner_banner">Banner Partner</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="banner-order">Thứ tự (#)</label>
-                <input type="number" id="banner-order" name="order" class="form-control" value="0">
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label class="form-label" for="banner-bg">Màu nền slide</label>
-                <select id="banner-bg" name="bgType" class="form-select">
-                  <option value="orange">Cam (Orange)</option>
-                  <option value="blue">Xanh (Blue)</option>
-                  <option value="neutral">Xám (Neutral)</option>
-                  <option value="orange-subtle">Cam nhạt (Subtle)</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="banner-cta">Nút CTA</label>
-                <input type="text" id="banner-cta" name="ctaText" class="form-control" value="Xem chi tiết">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="banner-link">Link đích (Destination URL) <span class="required">*</span></label>
-              <input type="text" id="banner-link" name="link" class="form-control" value="dang-ky-partner.html" placeholder="Ví dụ: dang-ky-partner.html hoặc https://..." required>
-              <span class="form-help">Tuyệt đối không nhập đường dẫn javascript: hoặc mã độc.</span>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="banner-alt">Văn bản thay thế (Alt text) <span class="required">*</span></label>
-              <input type="text" id="banner-alt" name="alt" class="form-control" placeholder="Mô tả ảnh cho SEO & trợ năng..." required>
-            </div>
-
-            <!-- UPLOAD ẢNH BANNER VỚI PREVIEW TRỰC TIẾP -->
+            <!-- 1. HÌNH ẢNH BANNER VỚI PREVIEW 2:1 -->
             <div class="form-group">
               <label class="form-label">Hình ảnh Banner (JPG, PNG, WebP) <span class="required">*</span></label>
               <div style="display: flex; gap: 6px;">
-                <input type="text" id="banner-image" name="image" class="form-control" placeholder="URL ảnh hoặc chọn file để upload" required>
+                <input type="text" id="banner-image" name="image" class="form-control" placeholder="URL ảnh hoặc upload bên phải" required>
                 <label class="upload-trigger-btn">
                   📷 Upload
                   <input type="file" id="file-upload-banner" accept=".jpg,.jpeg,.png,.webp" style="display: none;">
@@ -1085,6 +1027,29 @@
                 <span id="banner-preview-placeholder" style="font-size: 11px; color: var(--color-text-muted);">
                   Chưa có ảnh (Chọn file JPG/PNG/WebP hoặc dán URL)
                 </span>
+              </div>
+            </div>
+
+            <!-- 2. ĐƯỜNG DẪN ĐÍCH (URL KHI CLICK BANNER) -->
+            <div class="form-group">
+              <label class="form-label" for="banner-url">Đường dẫn đích (URL) <span class="required">*</span></label>
+              <input type="text" id="banner-url" name="url" class="form-control" value="dang-ky-partner.html" placeholder="Ví dụ: dang-ky-partner.html hoặc bai-viet.html?slug=kdol-la-gi" required>
+              <span class="form-help">Chuyển đến trang này khi người dùng click vào ảnh banner.</span>
+            </div>
+
+            <!-- 3. VỊ TRÍ & THỨ TỰ -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group">
+                <label class="form-label" for="banner-pos">Vị trí</label>
+                <select id="banner-pos" name="position" class="form-select">
+                  <option value="home_slider">Slider trang chủ</option>
+                  <option value="partner_banner">Banner Tuyển Partner</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="banner-order">Thứ tự (#)</label>
+                <input type="number" id="banner-order" name="order" class="form-control" value="0">
               </div>
             </div>
 

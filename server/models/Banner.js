@@ -8,12 +8,44 @@ const { isSafeUrl } = require('../utils/urlValidator');
 
 const bannerSchema = new mongoose.Schema(
   {
+    image: {
+      type: String,
+      required: [true, 'URL hình ảnh banner là bắt buộc'],
+      trim: true
+    },
+    url: {
+      type: String,
+      trim: true,
+      validate: {
+        validator: function(v) {
+          return !v || isSafeUrl(v);
+        },
+        message: 'Đường dẫn đích (URL) chứa ký tự hoặc giao thức không an toàn'
+      },
+      default: 'dang-ky-partner.html'
+    },
+    link: {
+      type: String,
+      trim: true,
+      validate: {
+        validator: function(v) {
+          return !v || isSafeUrl(v);
+        },
+        message: 'Đường dẫn đích (link) chứa ký tự hoặc giao thức không an toàn'
+      },
+      default: 'dang-ky-partner.html'
+    },
     title: {
       type: String,
-      required: [true, 'Tiêu đề banner là bắt buộc'],
       trim: true,
-      minlength: [2, 'Tiêu đề phải có ít nhất 2 ký tự'],
-      maxlength: [200, 'Tiêu đề không được vượt quá 200 ký tự']
+      maxlength: [200, 'Tiêu đề không được vượt quá 200 ký tự'],
+      default: ''
+    },
+    alt: {
+      type: String,
+      trim: true,
+      maxlength: [200, 'Alt text không được vượt quá 200 ký tự'],
+      default: 'Banner Thầy Giáo KDOL'
     },
     badge: {
       type: String,
@@ -36,34 +68,7 @@ const bannerSchema = new mongoose.Schema(
     bgType: {
       type: String,
       trim: true,
-      enum: {
-        values: ['orange', 'blue', 'neutral', 'orange-subtle'],
-        message: 'Màu nền banner phải là orange, blue, neutral hoặc orange-subtle'
-      },
       default: 'orange'
-    },
-    image: {
-      type: String,
-      required: [true, 'URL hình ảnh banner là bắt buộc'],
-      trim: true
-    },
-    alt: {
-      type: String,
-      required: [true, 'Văn bản thay thế (Alt text) là bắt buộc cho SEO và trợ năng'],
-      trim: true,
-      minlength: [2, 'Alt text phải có ít nhất 2 ký tự'],
-      maxlength: [200, 'Alt text không được vượt quá 200 ký tự']
-    },
-    link: {
-      type: String,
-      trim: true,
-      validate: {
-        validator: function(v) {
-          return isSafeUrl(v);
-        },
-        message: 'Đường dẫn đích (link) chứa ký tự hoặc giao thức không an toàn'
-      },
-      default: 'dang-ky-partner.html'
     },
     position: {
       type: String,

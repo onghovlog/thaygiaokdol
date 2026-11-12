@@ -27,43 +27,28 @@ const sampleCategories = [
   { name: 'Hành trình Partner', slug: 'partner', description: 'Kinh nghiệm thực tế và đồng hành cùng cộng đồng', order: 7 }
 ];
 
-// 2. Danh sách Banners Trang Chủ (Hỗ trợ position 'home' & 'home_slider')
+// 2. Danh sách Banners Trang Chủ (Chỉ cần image và url tỷ lệ 2:1)
 const sampleBanners = [
   {
-    title: 'Đăng Ký Partner Đồng Hành 1:1 Cùng Thầy Giáo KDOL',
-    subtitle: 'Chương trình cố vấn 1:1 - Bứt phá doanh số kinh doanh online tinh gọn 2026',
-    badge: 'Chương Trình Cố Vấn 1:1',
-    ctaText: 'Đăng ký Partner ngay',
-    link: 'dang-ky-partner.html',
-    bgType: 'orange',
     image: 'assets/images/banner-partner.svg',
-    alt: 'Đăng ký chương trình Cố vấn Partner 1:1 cùng Thầy Giáo KDOL',
+    url: 'dang-ky-partner.html',
+    link: 'dang-ky-partner.html',
     position: 'home_slider',
     order: 1,
     active: true
   },
   {
-    title: 'KDOL Là Gì? Cẩm Nang Kinh Doanh Online Thực Chiến Từ Số 0',
-    subtitle: 'Toàn cảnh kinh doanh online thực chiến: 3 trụ cột vững chắc và tư duy bền vững',
-    badge: 'Kiến Thức KDOL',
-    ctaText: 'Đọc bài viết ngay',
-    link: 'bai-viet.html?slug=kdol-la-gi',
-    bgType: 'blue',
     image: 'assets/images/banner-kdol.svg',
-    alt: 'KDOL là gì? Cẩm nang kinh doanh online thực chiến từ số 0 cho người mới',
+    url: 'bai-viet.html?slug=kdol-la-gi',
+    link: 'bai-viet.html?slug=kdol-la-gi',
     position: 'home_slider',
     order: 2,
     active: true
   },
   {
-    title: 'Droppii Là Gì? Giải Pháp Kinh Doanh Dropshipping 4 Không Đột Phá',
-    subtitle: 'Kinh doanh 4 Không: Không vốn nhập hàng, không tồn kho, không đóng gói, không cần kinh nghiệm',
-    badge: 'Nền Tảng Droppii',
-    ctaText: 'Tìm hiểu mô hình ngay',
-    link: 'bai-viet.html?slug=droppii-la-gi',
-    bgType: 'neutral',
     image: 'assets/images/banner-droppii.svg',
-    alt: 'Droppii là gì? Mô hình Dropshipping 4 Không đột phá',
+    url: 'bai-viet.html?slug=droppii-la-gi',
+    link: 'bai-viet.html?slug=droppii-la-gi',
     position: 'home_slider',
     order: 3,
     active: true

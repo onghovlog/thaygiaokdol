@@ -6,38 +6,29 @@
  * Sẵn sàng kết nối API Backend trong giai đoạn tiếp theo (khi tích hợp backend phải sanitize HTML phía server).
  */
 
-// Danh sách banner cho slider trang chủ (Tỷ lệ hình ảnh chuẩn 2:1)
+// Danh sách banner cho slider trang chủ (Chỉ cần image và url tỷ lệ 2:1)
 export const BANNERS_DATA = [
   {
     id: 1,
-    title: 'Đăng Ký Partner Đồng Hành 1:1 Cùng Thầy Giáo KDOL',
     image: 'assets/images/banner-partner.svg',
-    alt: 'Đăng ký chương trình Cố vấn Partner 1:1 cùng Thầy Giáo KDOL',
-    link: 'dang-ky-partner.html',
     url: 'dang-ky-partner.html',
-    position: 'home_slider',
+    link: 'dang-ky-partner.html',
     order: 1,
     active: true
   },
   {
     id: 2,
-    title: 'KDOL Là Gì? Cẩm Nang Kinh Doanh Online Thực Chiến Từ Số 0',
     image: 'assets/images/banner-kdol.svg',
-    alt: 'KDOL là gì? Cẩm nang kinh doanh online thực chiến từ số 0 cho người mới',
-    link: 'bai-viet.html?slug=kdol-la-gi',
     url: 'bai-viet.html?slug=kdol-la-gi',
-    position: 'home_slider',
+    link: 'bai-viet.html?slug=kdol-la-gi',
     order: 2,
     active: true
   },
   {
     id: 3,
-    title: 'Droppii Là Gì? Giải Pháp Kinh Doanh Dropshipping 4 Không Đột Phá',
     image: 'assets/images/banner-droppii.svg',
-    alt: 'Droppii là gì? Mô hình Dropshipping 4 Không - Không vốn, không tồn kho',
-    link: 'bai-viet.html?slug=droppii-la-gi',
     url: 'bai-viet.html?slug=droppii-la-gi',
-    position: 'home_slider',
+    link: 'bai-viet.html?slug=droppii-la-gi',
     order: 3,
     active: true
   }

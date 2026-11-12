@@ -61,26 +61,24 @@ export async function renderBannerSlider(containerSelector = '#banner-slider') {
     banners = BANNERS_DATA;
   }
 
-  // 3. Render các Slides với hình ảnh tỷ lệ 2:1, click chuyển link đích
+  // 3. Render các Slides chỉ cần image và url (tỷ lệ chuẩn 2:1)
   const slidesHtml = banners.map((banner, index) => {
-    const linkUrl = getSafeLink(banner.link || banner.url);
+    const linkUrl = getSafeLink(banner.url || banner.link);
     const imageUrl = banner.image || 'assets/images/banner-partner.svg';
-    const altText = banner.alt || banner.title || 'Banner Thầy Giáo KDOL';
-    const titleText = banner.title || altText;
+    const altText = banner.alt || 'Banner Thầy Giáo KDOL';
 
     return `
       <div 
         class="slider-slide" 
         role="group" 
         aria-roledescription="slide" 
-        aria-label="Slide ${index + 1} / ${banners.length}: ${escapeHtml(titleText)}"
+        aria-label="Slide ${index + 1} / ${banners.length}"
         data-slide-index="${index}"
       >
         <a 
           href="${escapeHtml(linkUrl)}" 
           class="slide-link" 
           aria-label="${escapeHtml(altText)}"
-          title="${escapeHtml(titleText)}"
         >
           <img 
             src="${escapeHtml(imageUrl)}" 

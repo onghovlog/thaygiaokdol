@@ -441,21 +441,25 @@ function bindBannerManagement() {
       e.preventDefault();
       const submitBtn = document.querySelector('#btn-submit-banner');
 
-      const title = form.title.value.trim();
-      const alt = form.alt.value.trim();
       const image = form.image.value.trim();
-      const link = form.link.value.trim();
-      const badge = form.badge.value.trim();
-      const subtitle = form.subtitle.value.trim();
+      const targetUrl = (form.url ? form.url.value : (form.link ? form.link.value : '')).trim();
       const position = form.position.value;
       const order = parseInt(form.order.value, 10) || 0;
-      const bgType = form.bgType.value;
-      const ctaText = form.ctaText.value.trim();
       const active = form.active.checked;
 
+      if (!image) {
+        showToast('❌ Vui lòng chọn hoặc nhập hình ảnh banner!');
+        return;
+      }
+
+      if (!targetUrl) {
+        showToast('❌ Vui lòng nhập đường dẫn đích (URL)!');
+        return;
+      }
+
       // Kiểm tra an toàn link đích
-      if (link && link.toLowerCase().startsWith('javascript:')) {
-        showToast('❌ Cảnh báo: Đường dẫn đích chứa mã javascript: bị cấm vì lý do an ninh!');
+      if (targetUrl.toLowerCase().startsWith('javascript:') || targetUrl.toLowerCase().startsWith('data:')) {
+        showToast('❌ Cảnh báo: Đường dẫn đích chứa mã javascript: hoặc data: bị cấm vì lý do an ninh!');
         return;
       }
 
@@ -465,14 +469,9 @@ function bindBannerManagement() {
       }
 
       const payload = {
-        title,
-        badge,
-        subtitle,
-        ctaText,
-        bgType,
         image,
-        alt,
-        link,
+        url: targetUrl,
+        link: targetUrl,
         position,
         order,
         active
@@ -571,38 +570,38 @@ async function loadBanners() {
       return;
     }
 
-    container.innerHTML = banners.map(b => `
+    container.innerHTML = banners.map(b => {
+      const bannerUrl = b.url || b.link || '';
+      return `
       <div class="banner-admin-card" id="banner-card-${b._id}">
-        <!-- THUMBNAIL PREVIEW -->
-        <div class="banner-thumb-box">
+        <!-- THUMBNAIL PREVIEW 2:1 -->
+        <div class="banner-thumb-box" style="aspect-ratio: 2 / 1; width: 130px; min-width: 130px; height: auto; border-radius: var(--radius-xs); overflow: hidden; border: 1px solid var(--color-border); background: #FFF7ED;">
           <img 
-            src="${escapeHtml(b.image || 'assets/images/article-default.svg')}" 
-            alt="${escapeHtml(b.alt || b.title)}" 
+            src="${escapeHtml(b.image || 'assets/images/banner-partner.svg')}" 
+            alt="Banner Image" 
             class="banner-thumb-img"
-            onerror="this.src='../assets/images/article-default.svg'"
+            style="width: 100%; height: 100%; object-fit: cover; display: block;"
+            onerror="this.src='../assets/images/banner-partner.svg'"
           >
         </div>
 
         <!-- INFO -->
-        <div class="banner-info-box">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <h4 class="banner-card-title">${escapeHtml(b.title)}</h4>
-            <span class="badge ${b.active ? 'badge-primary' : 'badge-neutral'}" style="font-size: 10px; margin-left: 4px;">
+        <div class="banner-info-box" style="flex: 1; min-width: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 6px;">
+            <div style="font-size: 12px; font-weight: 700; color: var(--color-text-main); word-break: break-all;">
+              🔗 <a href="${escapeHtml(bannerUrl)}" target="_blank" style="color: var(--color-primary); text-decoration: none;">${escapeHtml(bannerUrl || 'Chưa gắn link')}</a>
+            </div>
+            <span class="badge ${b.active ? 'badge-primary' : 'badge-neutral'}" style="font-size: 10px; flex-shrink: 0;">
               ${b.active ? 'Hoạt động' : 'Tạm dừng'}
             </span>
           </div>
 
-          <div style="font-size: 11px; color: var(--color-text-secondary); margin: 2px 0;">
-            ${b.badge ? `<span style="font-weight: 600; color: var(--color-primary);">[${escapeHtml(b.badge)}]</span> ` : ''}
-            ${escapeHtml(b.subtitle || '')}
-          </div>
-
-          <div style="font-size: 10px; color: var(--color-text-muted); margin-bottom: 4px;">
-            Vị trí: <strong>${escapeHtml(b.position || 'home_slider')}</strong> • Thứ tự: #${b.order || 0} • Link: <em>${escapeHtml(b.link || '')}</em>
+          <div style="font-size: 11px; color: var(--color-text-muted); margin: 4px 0;">
+            Vị trí: <strong>${escapeHtml(b.position || 'home_slider')}</strong> • Thứ tự: <strong>#${b.order || 0}</strong>
           </div>
 
           <!-- ACTIONS -->
-          <div class="banner-actions">
+          <div class="banner-actions" style="display: flex; gap: 4px; margin-top: 6px;">
             <button 
               type="button" 
               class="btn btn-outline btn-sm" 
@@ -630,7 +629,7 @@ async function loadBanners() {
           </div>
         </div>
       </div>
-    `).join('');
+    `}).join('');
 
   } catch (err) {
     container.innerHTML = `<div style="text-align: center; padding: 16px; color: #DC2626; font-size: 11px;">${escapeHtml(err.message)}</div>`;
@@ -656,17 +655,12 @@ window.handleEditBanner = async function(id) {
 
     document.querySelector('#banner-id').value = data._id;
     document.querySelector('#banner-modal-heading').textContent = 'Chỉnh Sửa Banner';
-    form.title.value = data.title || '';
-    form.badge.value = data.badge || '';
-    form.subtitle.value = data.subtitle || '';
-    form.position.value = data.position || 'home_slider';
-    form.order.value = data.order || 0;
-    form.bgType.value = data.bgType || 'orange';
-    form.ctaText.value = data.ctaText || 'Xem chi tiết';
-    form.link.value = data.link || 'dang-ky-partner.html';
-    form.alt.value = data.alt || '';
     form.image.value = data.image || '';
-    form.active.checked = Boolean(data.active);
+    if (form.url) form.url.value = data.url || data.link || '';
+    if (form.link) form.link.value = data.url || data.link || '';
+    if (form.position) form.position.value = data.position || 'home_slider';
+    if (form.order) form.order.value = data.order || 0;
+    if (form.active) form.active.checked = Boolean(data.active);
 
     // Cập nhật preview ảnh
     const previewImg = document.querySelector('#banner-preview-img');

@@ -40,10 +40,16 @@ const getPublicBanners = async (req, res, next) => {
       .select('-__v')
       .lean();
 
+    const normalizedBanners = banners.map(b => ({
+      ...b,
+      url: b.url || b.link || '',
+      link: b.link || b.url || ''
+    }));
+
     res.status(200).json({
       success: true,
-      count: banners.length,
-      data: banners
+      count: normalizedBanners.length,
+      data: normalizedBanners
     });
   } catch (error) {
     next(error);
@@ -73,17 +79,23 @@ const getAdminBanners = async (req, res, next) => {
     if (search && typeof search === 'string' && search.trim()) {
       const safeSearch = escapeRegex(search.trim());
       const regex = new RegExp(safeSearch, 'i');
-      query.$or = [{ title: regex }, { subtitle: regex }, { alt: regex }];
+      query.$or = [{ url: regex }, { link: regex }, { title: regex }, { alt: regex }];
     }
 
     const banners = await Banner.find(query)
       .sort({ order: 1, createdAt: -1 })
       .lean();
 
+    const normalizedBanners = banners.map(b => ({
+      ...b,
+      url: b.url || b.link || '',
+      link: b.link || b.url || ''
+    }));
+
     res.status(200).json({
       success: true,
-      count: banners.length,
-      data: banners
+      count: normalizedBanners.length,
+      data: normalizedBanners
     });
   } catch (error) {
     next(error);
@@ -112,50 +124,38 @@ const getBannerById = async (req, res, next) => {
   }
 };
 
-// @desc    Tạo Banner mới
+// @desc    Tạo Banner mới (Chỉ cần image và url)
 // @route   POST /api/admin/banners
 // @access  Private (requireAdmin + CSRF)
 const createBanner = async (req, res, next) => {
   try {
     const {
-      title,
-      badge,
-      subtitle,
-      ctaText,
-      bgType,
       image,
-      alt,
+      url,
       link,
+      title,
+      alt,
       position,
       order,
       active
     } = req.body;
 
-    if (!title || !title.trim()) {
-      return res.status(400).json({
-        success: false,
-        code: 'MISSING_TITLE',
-        message: 'Tiêu đề banner là bắt buộc.'
-      });
-    }
-
     if (!image || !image.trim()) {
       return res.status(400).json({
         success: false,
         code: 'MISSING_IMAGE',
-        message: 'Vui lòng cung cấp URL hoặc upload ảnh cho banner.'
+        message: 'Hình ảnh banner (image) là bắt buộc.'
       });
     }
 
-    const cleanAlt = (alt || title).trim();
-    const cleanLink = (link || 'dang-ky-partner.html').trim();
+    const cleanUrl = (url || link || '').trim() || 'dang-ky-partner.html';
 
     // Kiểm tra an toàn cho link đích
-    if (!isSafeUrl(cleanLink)) {
+    if (!isSafeUrl(cleanUrl)) {
       return res.status(400).json({
         success: false,
         code: 'UNSAFE_LINK',
-        message: 'Đường dẫn đích (link) chứa ký tự hoặc giao thức không an toàn (ví dụ: javascript:, data:).'
+        message: 'Đường dẫn đích (url) chứa ký tự hoặc giao thức không an toàn (ví dụ: javascript:, data:).'
       });
     }
 
@@ -167,14 +167,11 @@ const createBanner = async (req, res, next) => {
     }
 
     const banner = await Banner.create({
-      title: title.trim(),
-      badge: (badge || '').trim(),
-      subtitle: (subtitle || '').trim(),
-      ctaText: (ctaText || 'Xem chi tiết').trim(),
-      bgType: bgType || 'orange',
       image: image.trim(),
-      alt: cleanAlt,
-      link: cleanLink,
+      url: cleanUrl,
+      link: cleanUrl,
+      title: (title || '').trim(),
+      alt: (alt || title || 'Banner Thầy Giáo KDOL').trim(),
       position: cleanPosition,
       order: parseInt(order, 10) || 0,
       active: active !== undefined ? Boolean(active) : true
@@ -197,14 +194,11 @@ const updateBanner = async (req, res, next) => {
   try {
     const { id } = req.params;
     const {
-      title,
-      badge,
-      subtitle,
-      ctaText,
-      bgType,
       image,
-      alt,
+      url,
       link,
+      title,
+      alt,
       position,
       order,
       active
@@ -218,23 +212,24 @@ const updateBanner = async (req, res, next) => {
       });
     }
 
-    if (link && !isSafeUrl(link.trim())) {
-      return res.status(400).json({
-        success: false,
-        code: 'UNSAFE_LINK',
-        message: 'Đường dẫn đích (link) chứa ký tự hoặc giao thức không an toàn.'
-      });
+    const targetUrl = (url !== undefined ? url : link);
+    if (targetUrl !== undefined) {
+      const cleanUrl = String(targetUrl).trim();
+      if (!isSafeUrl(cleanUrl)) {
+        return res.status(400).json({
+          success: false,
+          code: 'UNSAFE_LINK',
+          message: 'Đường dẫn đích (url) chứa ký tự hoặc giao thức không an toàn.'
+        });
+      }
+      banner.url = cleanUrl;
+      banner.link = cleanUrl;
     }
 
-    if (title) banner.title = title.trim();
-    if (badge !== undefined) banner.badge = badge.trim();
-    if (subtitle !== undefined) banner.subtitle = subtitle.trim();
-    if (ctaText !== undefined) banner.ctaText = ctaText.trim();
-    if (bgType) banner.bgType = bgType;
-    if (image) banner.image = image.trim();
-    if (alt) banner.alt = alt.trim();
-    if (link) banner.link = link.trim();
-    if (position) banner.position = position.trim();
+    if (image !== undefined) banner.image = String(image).trim();
+    if (title !== undefined) banner.title = String(title).trim();
+    if (alt !== undefined) banner.alt = String(alt).trim();
+    if (position !== undefined) banner.position = String(position).trim();
     if (order !== undefined) banner.order = parseInt(order, 10) || 0;
     if (active !== undefined) banner.active = Boolean(active);
 
