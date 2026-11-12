@@ -10,6 +10,16 @@ const { isSafeUrl } = require('../utils/urlValidator');
 const { escapeRegex } = require('../utils/sanitize');
 const { BASE_UPLOAD_DIR } = require('../middleware/upload');
 
+// Chuẩn hóa đường dẫn hình ảnh có leading slash để luôn load đúng ở mọi tầng route (/admin hoặc /)
+const formatImageUrl = (img) => {
+  if (!img || typeof img !== 'string') return '/assets/images/banner-partner.svg';
+  const trimmed = img.trim();
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('data:') || trimmed.startsWith('blob:') || trimmed.startsWith('/')) {
+    return trimmed;
+  }
+  return '/' + trimmed;
+};
+
 // ==========================================
 // 1. PUBLIC APIS
 // ==========================================
@@ -42,6 +52,7 @@ const getPublicBanners = async (req, res, next) => {
 
     const normalizedBanners = banners.map(b => ({
       ...b,
+      image: formatImageUrl(b.image),
       url: b.url || b.link || '',
       link: b.link || b.url || ''
     }));
@@ -88,6 +99,7 @@ const getAdminBanners = async (req, res, next) => {
 
     const normalizedBanners = banners.map(b => ({
       ...b,
+      image: formatImageUrl(b.image),
       url: b.url || b.link || '',
       link: b.link || b.url || ''
     }));

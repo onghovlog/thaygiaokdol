@@ -174,12 +174,18 @@ app.get('/sitemap.xml', async (req, res, next) => {
 app.use(express.static(path.join(__dirname, '../client'), staticOptions));
 
 // Thư mục uploads: Chặn directory listing (index: false) và chặn dotfiles
+// Hỗ trợ cả truy cập trực tiếp từ root (/uploads) và từ thư mục con admin (/admin/uploads)
 app.use(
-  '/uploads',
+  ['/uploads', '/admin/uploads'],
   express.static(path.join(__dirname, '../client/uploads'), {
     ...staticOptions,
     index: false
   })
+);
+
+app.use(
+  ['/assets', '/admin/assets'],
+  express.static(path.join(__dirname, '../client/assets'), staticOptions)
 );
 
 // ==========================================

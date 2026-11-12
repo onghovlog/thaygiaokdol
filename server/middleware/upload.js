@@ -122,8 +122,8 @@ function handleUpload(uploadMiddleware, subFolder = 'banners') {
         });
       }
 
-      // Tạo đường dẫn URL tương đối an toàn để client truy cập
-      const relativeUrl = `uploads/${subFolder}/${req.file.filename}`;
+      // Tạo đường dẫn URL an toàn với leading slash để client/admin ở bất kỳ tầng thư mục nào cũng load được
+      const relativeUrl = `/uploads/${subFolder}/${req.file.filename}`;
       req.uploadedFileUrl = relativeUrl;
 
       next();

@@ -17,6 +17,19 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
+// Chuẩn hóa URL ảnh có leading slash để luôn load đúng ở mọi trang
+function resolveImageUrl(url, defaultFallback = '/assets/images/banner-partner.svg') {
+  if (!url || typeof url !== 'string' || !url.trim()) return defaultFallback;
+  const trimmed = url.trim();
+  if (trimmed.startsWith('data:') || trimmed.startsWith('blob:') || trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+    return trimmed;
+  }
+  if (trimmed.startsWith('/')) {
+    return trimmed;
+  }
+  return '/' + trimmed;
+}
+
 // Kiểm tra và chuẩn hóa link đích an toàn
 function getSafeLink(rawLink) {
   if (!rawLink || typeof rawLink !== 'string') return 'dang-ky-partner.html';
@@ -64,7 +77,7 @@ export async function renderBannerSlider(containerSelector = '#banner-slider') {
   // 3. Render các Slides chỉ cần image và url (tỷ lệ chuẩn 2:1)
   const slidesHtml = banners.map((banner, index) => {
     const linkUrl = getSafeLink(banner.url || banner.link);
-    const imageUrl = banner.image || 'assets/images/banner-partner.svg';
+    const imageUrl = resolveImageUrl(banner.image);
     const altText = banner.alt || 'Banner Thầy Giáo KDOL';
 
     return `

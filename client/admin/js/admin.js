@@ -420,9 +420,9 @@ function bindBannerManagement() {
   }
 
   function updateBannerPreview(url) {
-    if (url && (url.startsWith('data:image') || url.startsWith('http') || url.startsWith('uploads/') || url.startsWith('assets/'))) {
+    if (url && (url.startsWith('data:image') || url.startsWith('http') || url.startsWith('/') || url.startsWith('uploads/') || url.startsWith('assets/'))) {
       if (previewImg) {
-        previewImg.src = url;
+        previewImg.src = resolveImageUrl(url);
         previewImg.style.display = 'block';
       }
       if (previewPlaceholder) previewPlaceholder.style.display = 'none';
@@ -577,11 +577,11 @@ async function loadBanners() {
         <!-- THUMBNAIL PREVIEW 2:1 -->
         <div class="banner-thumb-box" style="aspect-ratio: 2 / 1; width: 130px; min-width: 130px; height: auto; border-radius: var(--radius-xs); overflow: hidden; border: 1px solid var(--color-border); background: #FFF7ED;">
           <img 
-            src="${escapeHtml(b.image || 'assets/images/banner-partner.svg')}" 
+            src="${escapeHtml(resolveImageUrl(b.image))}" 
             alt="Banner Image" 
             class="banner-thumb-img"
             style="width: 100%; height: 100%; object-fit: cover; display: block;"
-            onerror="this.src='../assets/images/banner-partner.svg'"
+            onerror="this.onerror=null;this.src='/assets/images/banner-partner.svg'"
           >
         </div>
 
@@ -667,7 +667,7 @@ window.handleEditBanner = async function(id) {
     const previewPlaceholder = document.querySelector('#banner-preview-placeholder');
     if (data.image) {
       if (previewImg) {
-        previewImg.src = data.image;
+        previewImg.src = resolveImageUrl(data.image);
         previewImg.style.display = 'block';
       }
       if (previewPlaceholder) previewPlaceholder.style.display = 'none';
@@ -2370,6 +2370,18 @@ function showToast(message) {
   setTimeout(() => {
     toast.style.display = 'none';
   }, 3000);
+}
+
+function resolveImageUrl(url, defaultFallback = '/assets/images/banner-partner.svg') {
+  if (!url || typeof url !== 'string' || !url.trim()) return defaultFallback;
+  const trimmed = url.trim();
+  if (trimmed.startsWith('data:') || trimmed.startsWith('blob:') || trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+    return trimmed;
+  }
+  if (trimmed.startsWith('/')) {
+    return trimmed;
+  }
+  return '/' + trimmed;
 }
 
 function escapeHtml(str) {
