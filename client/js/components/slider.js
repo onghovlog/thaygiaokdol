@@ -1,10 +1,31 @@
 /**
- * Banner Slider Component (Tích hợp REST API)
+ * Banner Slider Component (Tỷ lệ ảnh chuẩn 2:1, Tích hợp REST API MongoDB Atlas)
  * Thầy Giáo KDOL - "1 đơn hàng - 1 nụ cười"
  */
 
 import { getBanners } from '../api.js';
 import { BANNERS_DATA } from '../data/mock-data.js';
+
+// Hàm escape HTML an toàn chống XSS
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Kiểm tra và chuẩn hóa link đích an toàn
+function getSafeLink(rawLink) {
+  if (!rawLink || typeof rawLink !== 'string') return 'dang-ky-partner.html';
+  const trimmed = rawLink.trim();
+  if (/^javascript:/i.test(trimmed) || /^data:/i.test(trimmed)) {
+    return 'dang-ky-partner.html';
+  }
+  return trimmed;
+}
 
 export async function renderBannerSlider(containerSelector = '#banner-slider') {
   const container = typeof containerSelector === 'string'
@@ -13,7 +34,7 @@ export async function renderBannerSlider(containerSelector = '#banner-slider') {
 
   if (!container) return;
 
-  // 1. Trạng thái Loading ban đầu
+  // 1. Trạng thái Loading ban đầu với tỷ lệ 2:1
   container.innerHTML = `
     <div class="slider-viewport slider-loading-skeleton" aria-busy="true" aria-label="Đang nạp banner...">
       <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: #FFF7ED; color: var(--color-primary); font-size: var(--font-size-xs); font-weight: 600;">
@@ -26,7 +47,10 @@ export async function renderBannerSlider(containerSelector = '#banner-slider') {
 
   try {
     // 2. Gọi API lấy banner trang chủ từ MongoDB
-    banners = await getBanners('home');
+    banners = await getBanners('home_slider');
+    if (!banners || banners.length === 0) {
+      banners = await getBanners('home');
+    }
   } catch (err) {
     console.warn('[Slider API] Không thể tải banner từ API, sử dụng dữ liệu dự phòng:', err.message);
     banners = BANNERS_DATA;
@@ -37,47 +61,38 @@ export async function renderBannerSlider(containerSelector = '#banner-slider') {
     banners = BANNERS_DATA;
   }
 
-  // 3. Render các Slides
+  // 3. Render các Slides với hình ảnh tỷ lệ 2:1, click chuyển link đích
   const slidesHtml = banners.map((banner, index) => {
-    let bgStyleClass = 'slide-bg-orange';
-    if (banner.bgType === 'blue') bgStyleClass = 'slide-bg-blue';
-    if (banner.bgType === 'neutral') bgStyleClass = 'slide-bg-neutral';
-    if (banner.bgType === 'orange-subtle') bgStyleClass = 'slide-bg-orange-subtle';
-
-    const linkUrl = banner.link || banner.url || 'dang-ky-partner.html';
+    const linkUrl = getSafeLink(banner.link || banner.url);
+    const imageUrl = banner.image || 'assets/images/banner-partner.svg';
+    const altText = banner.alt || banner.title || 'Banner Thầy Giáo KDOL';
+    const titleText = banner.title || altText;
 
     return `
       <div 
-        class="slider-slide ${bgStyleClass}" 
+        class="slider-slide" 
         role="group" 
         aria-roledescription="slide" 
-        aria-label="Slide ${index + 1} / ${banners.length}"
+        aria-label="Slide ${index + 1} / ${banners.length}: ${escapeHtml(titleText)}"
         data-slide-index="${index}"
       >
-        <a href="${linkUrl}" class="slide-link-overlay" aria-label="${banner.title}">
-          <div class="slide-content">
-            ${banner.badge ? `<span class="slide-badge">${banner.badge}</span>` : ''}
-            <h2 class="slide-title">${banner.title}</h2>
-            ${banner.subtitle ? `<p class="slide-subtitle">${banner.subtitle}</p>` : ''}
-            <span class="slide-cta-pill">
-              ${banner.ctaText || 'Xem chi tiết'} →
-            </span>
-          </div>
-          ${banner.image ? `
-            <div class="slide-thumb-illustration" aria-hidden="true" style="position: absolute; right: 12px; bottom: 12px; width: 68px; height: 68px; border-radius: var(--radius-xs); overflow: hidden; opacity: 0.85; pointer-events: none; border: 1px solid rgba(0,0,0,0.06);">
-              <img 
-                src="${escapeHtml(banner.image)}" 
-                alt="${escapeHtml(banner.alt || banner.title)}" 
-                width="68" 
-                height="68" 
-                loading="${index === 0 ? 'eager' : 'lazy'}"
-                ${index === 0 ? 'fetchpriority="high"' : ''}
-                decoding="async"
-                style="width: 100%; height: 100%; object-fit: cover;" 
-                onerror="this.parentElement.style.display='none'"
-              >
-            </div>
-          ` : ''}
+        <a 
+          href="${escapeHtml(linkUrl)}" 
+          class="slide-link" 
+          aria-label="${escapeHtml(altText)}"
+          title="${escapeHtml(titleText)}"
+        >
+          <img 
+            src="${escapeHtml(imageUrl)}" 
+            alt="${escapeHtml(altText)}" 
+            class="slide-img" 
+            width="860" 
+            height="430" 
+            loading="${index === 0 ? 'eager' : 'lazy'}"
+            ${index === 0 ? 'fetchpriority="high"' : ''}
+            decoding="async"
+            onerror="this.onerror=null;this.src='assets/images/banner-partner.svg';"
+          >
         </a>
       </div>
     `;
@@ -112,7 +127,7 @@ export async function renderBannerSlider(containerSelector = '#banner-slider') {
     </div>
   `;
 
-  // 5. Khởi tạo điều khiển Slider (Touch, Autoplay 5s, Keyboard)
+  // 5. Khởi tạo điều khiển Slider (Touch, Autoplay 5s, Keyboard, Chống click nhầm khi vuốt)
   initSliderInteractions(container, banners.length);
 }
 
@@ -189,23 +204,28 @@ function initSliderInteractions(container, totalSlides) {
     }
   });
 
-  // Touch Swipe trên Mobile
+  // Touch Swipe trên Mobile & Chống click nhầm khi đang vuốt chạm
   let startX = 0;
   let currentX = 0;
   let isSwiping = false;
-  const SWIPE_THRESHOLD = 40;
+  let wasSwiping = false;
+  const SWIPE_THRESHOLD = 35;
 
   viewport.addEventListener('touchstart', (e) => {
     if (!e.touches || e.touches.length === 0) return;
     startX = e.touches[0].clientX;
     currentX = startX;
     isSwiping = true;
+    wasSwiping = false;
     stopAutoplay();
   }, { passive: true });
 
   viewport.addEventListener('touchmove', (e) => {
     if (!isSwiping || !e.touches || e.touches.length === 0) return;
     currentX = e.touches[0].clientX;
+    if (Math.abs(currentX - startX) > 8) {
+      wasSwiping = true;
+    }
   }, { passive: true });
 
   viewport.addEventListener('touchend', () => {
@@ -220,7 +240,24 @@ function initSliderInteractions(container, totalSlides) {
         goToSlide(currentIndex - 1);
       }
     }
+
+    setTimeout(() => {
+      wasSwiping = false;
+    }, 150);
+
     startAutoplay();
+  });
+
+  // Ngăn chặn chuyển trang khi người dùng đang thực hiện cử chỉ vuốt ngang
+  const slideLinks = container.querySelectorAll('.slide-link');
+  slideLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (wasSwiping) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    });
   });
 
   startAutoplay();

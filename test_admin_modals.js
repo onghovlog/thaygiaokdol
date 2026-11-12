@@ -166,7 +166,7 @@ async function testAdminModals() {
     // ==========================================
     console.log('\n4️⃣ Kiểm thử Tìm kiếm & Bộ lọc Bài viết...');
     await page.fill('#post-search-input', testPostTitle);
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1200);
     const searchResultCount = await page.locator('#admin-posts-list .card').count();
     console.log(` - Kết quả tìm kiếm theo tiêu đề: ${searchResultCount} bài viết`);
     if (searchResultCount === 0) {
@@ -175,7 +175,7 @@ async function testAdminModals() {
 
     // Đặt lại ô tìm kiếm
     await page.fill('#post-search-input', '');
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1200);
 
     // ==========================================
     // 5. DỌN DẸP DỮ LIỆU TEST (DELETE CRUD)

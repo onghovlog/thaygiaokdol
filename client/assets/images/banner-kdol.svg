@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 430" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgKdol" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="50%" stop-color="#DBEAFE" />
+      <stop offset="100%" stop-color="#BFDBFE" />
+    </linearGradient>
+    <linearGradient id="blueBtnGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#123FCB" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+    <filter id="shadowKdol" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background 2:1 -->
+  <rect width="860" height="430" fill="url(#bgKdol)" />
+
+  <!-- Decorative geometric elements -->
+  <circle cx="840" cy="60" r="150" fill="#123FCB" fill-opacity="0.06" />
+  <circle cx="760" cy="400" r="160" fill="#F37021" fill-opacity="0.05" />
+  <circle cx="30" cy="380" r="80" fill="#2563EB" fill-opacity="0.05" />
+
+  <!-- Dots grid -->
+  <g fill="#123FCB" opacity="0.15">
+    <circle cx="440" cy="40" r="2.5" />
+    <circle cx="460" cy="40" r="2.5" />
+    <circle cx="480" cy="40" r="2.5" />
+    <circle cx="440" cy="60" r="2.5" />
+    <circle cx="460" cy="60" r="2.5" />
+    <circle cx="480" cy="60" r="2.5" />
+  </g>
+
+  <!-- LEFT CONTENT -->
+  <g transform="translate(56, 48)">
+    <!-- Badge -->
+    <rect width="180" height="34" rx="17" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5" />
+    <circle cx="18" cy="17" r="6" fill="#123FCB" />
+    <text x="32" y="22" font-family="'Be Vietnam Pro', -apple-system, sans-serif" font-size="12" font-weight="700" fill="#123FCB" letter-spacing="0.5">KIẾN THỨC NỀN TẢNG</text>
+
+    <!-- Main Title -->
+    <text x="0" y="85" font-family="'Be Vietnam Pro', -apple-system, sans-serif" font-size="34" font-weight="800" fill="#0F172A">
+      <tspan x="0" dy="0">KDOL LÀ GÌ?</tspan>
+      <tspan x="0" dy="44" fill="#123FCB">CẨM NANG TỪ CON SỐ 0</tspan>
+    </text>
+
+    <!-- Subtitle -->
+    <text x="0" y="195" font-family="'Be Vietnam Pro', -apple-system, sans-serif" font-size="15" font-weight="500" fill="#334155">
+      <tspan x="0" dy="0">Toàn cảnh kinh doanh online thực chiến: 3 giai đoạn then chốt,</tspan>
+      <tspan x="0" dy="24">bẫy rủi ro thường gặp và tư duy xây dựng doanh số bền vững.</tspan>
+    </text>
+
+    <!-- 3 Pillars Chips -->
+    <g transform="translate(0, 246)">
+      <rect width="130" height="28" rx="14" fill="#FFFFFF" stroke="#CBD5E1" />
+      <text x="65" y="18" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="600" fill="#1E293B" text-anchor="middle">📦 Nguồn hàng chuẩn</text>
+
+      <rect x="140" width="130" height="28" rx="14" fill="#FFFFFF" stroke="#CBD5E1" />
+      <text x="205" y="18" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="600" fill="#1E293B" text-anchor="middle">⚡ Vận hành tinh gọn</text>
+
+      <rect x="280" width="138" height="28" rx="14" fill="#FFFFFF" stroke="#CBD5E1" />
+      <text x="349" y="18" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="600" fill="#1E293B" text-anchor="middle">😊 Khách hàng an tâm</text>
+    </g>
+
+    <!-- CTA Button -->
+    <g transform="translate(0, 296)" filter="url(#shadowKdol)">
+      <rect width="230" height="48" rx="24" fill="url(#blueBtnGrad)" />
+      <text x="115" y="30" font-family="'Be Vietnam Pro', -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.3">ĐỌC BÀI VIẾT NGAY →</text>
+    </g>
+  </g>
+
+  <!-- RIGHT GRAPHIC AREA -->
+  <g transform="translate(540, 48)">
+    <!-- Diagram Card Background -->
+    <rect x="10" y="24" width="250" height="280" rx="20" fill="#FFFFFF" filter="url(#shadowKdol)" stroke="#E2E8F0" stroke-width="1.5" />
+
+    <!-- Big KDOL Lettering Header -->
+    <rect x="30" y="44" width="210" height="52" rx="12" fill="#F8FAFC" stroke="#E2E8F0" />
+    <text x="135" y="78" font-family="'Be Vietnam Pro', sans-serif" font-size="20" font-weight="800" fill="#123FCB" text-anchor="middle" letter-spacing="2">KDOL 2026</text>
+
+    <!-- 3 Connected Step Cards -->
+    <!-- Step 1 -->
+    <g transform="translate(30, 110)">
+      <rect width="210" height="42" rx="8" fill="#FFF7ED" stroke="#FED7AA" />
+      <circle cx="24" cy="21" r="11" fill="#F37021" />
+      <text x="24" y="25" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+      <text x="46" y="20" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="700" fill="#1E293B">Thấu hiểu sản phẩm &amp; tệp</text>
+      <text x="46" y="33" font-family="'Be Vietnam Pro', sans-serif" font-size="9" fill="#64748B">Tránh đốt vốn vào ngách sai</text>
+    </g>
+
+    <!-- Step 2 -->
+    <g transform="translate(30, 162)">
+      <rect width="210" height="42" rx="8" fill="#EFF6FF" stroke="#BFDBFE" />
+      <circle cx="24" cy="21" r="11" fill="#123FCB" />
+      <text x="24" y="25" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+      <text x="46" y="20" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="700" fill="#1E293B">Xây phễu chuyển đổi tự nhiên</text>
+      <text x="46" y="33" font-family="'Be Vietnam Pro', sans-serif" font-size="9" fill="#64748B">TikTok, Shopee, Affiliate</text>
+    </g>
+
+    <!-- Step 3 -->
+    <g transform="translate(30, 214)">
+      <rect width="210" height="42" rx="8" fill="#F0FDF4" stroke="#BBF7D0" />
+      <circle cx="24" cy="21" r="11" fill="#16A34A" />
+      <text x="24" y="25" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+      <text x="46" y="20" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="700" fill="#1E293B">Tối ưu vận hành &amp; hoàn hàng</text>
+      <text x="46" y="33" font-family="'Be Vietnam Pro', sans-serif" font-size="9" fill="#64748B">Kiểm soát tỷ lệ bom dưới 5%</text>
+    </g>
+
+    <text x="135" y="285" font-family="'Be Vietnam Pro', sans-serif" font-size="10" font-weight="600" fill="#94A3B8" text-anchor="middle">Thầy Giáo KDOL • 8 phút đọc</text>
+
+    <!-- Floating Badge Top Right -->
+    <g transform="translate(180, 8)" filter="url(#shadowKdol)">
+      <rect width="90" height="34" rx="17" fill="#F37021" />
+      <text x="45" y="22" font-family="'Be Vietnam Pro', sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">📖 Miễn Phí</text>
+    </g>
+  </g>
+</svg>

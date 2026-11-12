@@ -123,13 +123,32 @@ const getPostBySlug = async (req, res, next) => {
 
     const cleanSlug = slug.toLowerCase().trim();
 
-    // Tìm bài viết theo slug chính
-    const post = await Post.findOne({
+    // Tìm bài viết theo slug chính hoặc alias phổ biến
+    let post = await Post.findOne({
       slug: cleanSlug,
       status: 'published'
     })
       .select('-__v')
       .lean();
+
+    // Hỗ trợ alias linh hoạt (ví dụ: kdol-la-gi, droppii-la-gi)
+    if (!post) {
+      let aliasTarget = null;
+      if (cleanSlug === 'kdol-la-gi' || cleanSlug === 'kdol' || cleanSlug === 'kdol-la-gi-toan-canh-thuc-chien') {
+        aliasTarget = 'kinh-doanh-online-la-gi';
+      } else if (cleanSlug === 'droppii-la-gi' || cleanSlug === 'droppii' || cleanSlug === 'mo-hinh-dropshipping-droppii') {
+        aliasTarget = 'hieu-dung-ve-mo-hinh-dropshipping-droppii';
+      }
+
+      if (aliasTarget) {
+        post = await Post.findOne({
+          slug: aliasTarget,
+          status: 'published'
+        })
+          .select('-__v')
+          .lean();
+      }
+    }
 
     if (!post) {
       return res.status(404).json({
