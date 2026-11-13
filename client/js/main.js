@@ -58,6 +58,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // 3.5. Cập nhật Logo nếu có từ cài đặt
+    if (settings.site_logo) {
+      const resolvedLogo = settings.site_logo.startsWith('http') || settings.site_logo.startsWith('/')
+        ? settings.site_logo
+        : `${basePath}${settings.site_logo}`;
+      document.querySelectorAll('.header-logo-img, .drawer-logo-img').forEach(el => {
+        el.src = resolvedLogo;
+      });
+    }
+
     // 4. Cập nhật Tên thương hiệu & Slogan
     if (settings.site_name) {
       document.querySelectorAll('.brand-title').forEach(el => {

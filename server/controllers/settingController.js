@@ -29,8 +29,8 @@ const SENSITIVE_KEY_PATTERN = /(password|secret|token|key|credential|admin_hash|
 const DEFAULT_PUBLIC_SETTINGS = {
   site_name: 'Thầy Giáo KDOL',
   site_slogan: '1 đơn hàng - 1 nụ cười',
-  site_logo: 'assets/images/logo.svg',
-  site_avatar: 'assets/images/portrait-placeholder.svg',
+  site_logo: 'assets/images/logo.png',
+  site_avatar: 'assets/images/thay-giao-kdol-portrait.svg',
   contact_phone: '0000000000',
   contact_zalo: 'https://zalo.me/placeholder_kdol',
   contact_messenger: 'https://m.me/placeholder_kdol',

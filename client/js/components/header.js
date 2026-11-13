@@ -23,32 +23,21 @@ export function renderHeader(containerSelector = '#site-header', options = {}) {
 
   const basePath = options.basePath || '';
   const currentFileName = window.location.pathname.split('/').pop() || 'index.html';
+  const logoSrc = `${basePath}assets/images/logo.png`;
 
-  // SVG Avatar biểu trưng cho "Thầy Giáo" (Mũ cử nhân) + "1 đơn hàng - 1 nụ cười"
-  const avatarSvg = `
-    <span class="header-avatar" aria-hidden="true">
-      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="18" cy="18" r="18" fill="var(--color-primary)"/>
-        <!-- Mũ học vấn / Thầy giáo -->
-        <path d="M18 9L8 14L18 19L28 14L18 9Z" fill="#FFFFFF"/>
-        <path d="M12 16.5V21.5C12 23.5 14.5 25 18 25C21.5 25 24 23.5 24 21.5V16.5" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
-        <path d="M26 15V22" stroke="var(--color-secondary-light)" stroke-width="1.6" stroke-linecap="round"/>
-        <!-- Nụ cười thương hiệu: 1 đơn hàng - 1 nụ cười -->
-        <path d="M14 27.5C15.2 29 20.8 29 22 27.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
-      </svg>
-    </span>
-  `;
-
-  // Render HTML cho Header Bar
+  // Render HTML cho Header Bar với logo hình ảnh chính thức
   container.innerHTML = `
     <div class="header-inner">
-      <!-- LOGO / AVATAR TRẢ VỀ TRANG CHỦ -->
+      <!-- LOGO HÌNH ẢNH TRẢ VỀ TRANG CHỦ -->
       <a href="${basePath}index.html" class="header-brand" aria-label="${SITE_CONFIG.brand.name} - Về trang chủ">
-        ${avatarSvg}
-        <div class="brand-text-group">
-          <span class="brand-title">${SITE_CONFIG.brand.name}</span>
-          <span class="brand-slogan">${SITE_CONFIG.brand.slogan}</span>
-        </div>
+        <img 
+          src="${logoSrc}" 
+          alt="${SITE_CONFIG.brand.name}" 
+          class="header-logo-img"
+          width="190" 
+          height="35"
+          decoding="async"
+        >
       </a>
 
       <!-- NÚT HAMBURGER MENU VỚI ARIA HOÀN CHỈNH -->
@@ -147,8 +136,15 @@ function mountNavigationDrawer(basePath, currentFileName) {
   drawer.innerHTML = `
     <div class="drawer-header">
       <div class="drawer-header-brand">
-        <span class="brand-title">${SITE_CONFIG.brand.name}</span>
-        <span class="brand-slogan">${SITE_CONFIG.brand.slogan}</span>
+        <a href="${basePath}index.html" style="display: flex; align-items: center; text-decoration: none;" aria-label="${SITE_CONFIG.brand.name} - Về trang chủ">
+          <img 
+            src="${basePath}assets/images/logo.png" 
+            alt="${SITE_CONFIG.brand.name}" 
+            class="drawer-logo-img"
+            width="180" 
+            height="33"
+          >
+        </a>
       </div>
       <button 
         type="button" 
