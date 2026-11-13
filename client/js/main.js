@@ -104,8 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBannerSlider('#banner-slider');
 
   // 5. Khởi tạo danh sách Bài viết mới & Kiến thức nổi bật (Trang chủ)
-  renderLatestArticles('#latest-articles-list');
-  renderFeaturedArticles('#featured-articles-list');
+  renderLatestArticles('#latest-articles-list', { basePath });
+  renderFeaturedArticles('#featured-articles-list', { basePath });
 
   // 6. Khởi tạo form đăng ký nếu có trên trang
   initPartnerForm('#partner-register-form');

@@ -8,12 +8,14 @@ import { getPosts, getFeaturedPosts } from '../api.js';
 /**
  * 1. Render Section 4: Bài viết mới (4–5 bài mới nhất)
  */
-export async function renderLatestArticles(containerSelector = '#latest-articles-list') {
+export async function renderLatestArticles(containerSelector = '#latest-articles-list', options = {}) {
   const container = typeof containerSelector === 'string'
     ? document.querySelector(containerSelector)
     : containerSelector;
 
   if (!container) return;
+
+  const basePath = options.basePath || '';
 
   // Trạng thái Loading
   renderArticlesLoadingState(container, 4);
@@ -33,9 +35,7 @@ export async function renderLatestArticles(containerSelector = '#latest-articles
     container.innerHTML = items.map(article => `
       <a href="bai-viet.html?slug=${article.slug}" class="post-card post-card-compact" aria-label="${escapeHtml(article.title)}">
         <div class="post-card-inner">
-          <div class="post-thumbnail-placeholder" aria-hidden="true">
-            ${getThumbnailSvg(article.thumbnailIcon, article.category)}
-          </div>
+          ${renderThumbnailHtml(article, basePath)}
           <div class="post-card-content">
             <div class="post-card-meta">
               <span class="badge ${getCategoryBadgeClass(article.category)}">${escapeHtml(article.category)}</span>
@@ -49,7 +49,7 @@ export async function renderLatestArticles(containerSelector = '#latest-articles
     `).join('');
   } catch (err) {
     console.error('[Latest Articles API Error]', err);
-    renderArticlesErrorState(container, 'Không thể tải danh sách bài viết mới.', () => renderLatestArticles(containerSelector));
+    renderArticlesErrorState(container, 'Không thể tải danh sách bài viết mới.', () => renderLatestArticles(containerSelector, options));
   }
 }
 
@@ -146,6 +146,44 @@ function getCategoryBadgeClass(category) {
   if (catLower.includes('droppii') || catLower.includes('partner')) return 'badge-secondary';
   if (catLower.includes('sales') || catLower.includes('bán hàng') || catLower.includes('tiktok')) return 'badge-neutral';
   return 'badge-primary';
+}
+
+function renderThumbnailHtml(article, basePath = '') {
+  const rawImg = article.thumbnail || article.featuredImage;
+
+  if (rawImg && typeof rawImg === 'string' && rawImg.trim()) {
+    let src = rawImg.trim();
+    if (!src.startsWith('http://') && !src.startsWith('https://') && !src.startsWith('data:')) {
+      if (src.startsWith('/')) {
+        src = `${basePath}${src.slice(1)}`;
+      } else {
+        src = `${basePath}${src}`;
+      }
+    }
+    const safeTitle = escapeHtml(article.title || 'Bài viết');
+    const defaultFallback = `${basePath}assets/images/article-default.svg`;
+
+    return `
+      <div class="post-thumbnail-wrapper" aria-hidden="true">
+        <img 
+          src="${src}" 
+          alt="${safeTitle}" 
+          class="post-thumbnail-img"
+          width="72"
+          height="72"
+          loading="lazy"
+          decoding="async"
+          onerror="this.onerror=null; this.src='${defaultFallback}';"
+        >
+      </div>
+    `;
+  }
+
+  return `
+    <div class="post-thumbnail-placeholder" aria-hidden="true">
+      ${getThumbnailSvg(article.thumbnailIcon, article.category)}
+    </div>
+  `;
 }
 
 function getThumbnailSvg(type, categoryName = 'KDOL') {

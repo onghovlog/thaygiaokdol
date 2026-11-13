@@ -275,9 +275,7 @@ async function loadAndRenderArticles() {
     listContainer.innerHTML = blogState.loadedArticles.map(article => `
       <article class="post-card post-card-compact">
         <a href="bai-viet.html?slug=${article.slug}" class="post-card-inner" aria-label="${escapeHtml(article.title)}">
-          <div class="post-thumbnail-placeholder" aria-hidden="true">
-            ${getThumbnailSvg(article.thumbnailIcon, article.category)}
-          </div>
+          ${renderThumbnailHtml(article)}
           <div class="post-card-content">
             <div class="post-card-meta">
               <span class="badge ${getCategoryBadgeClass(article.category)}">${escapeHtml(article.category)}</span>
@@ -413,6 +411,44 @@ function getCategoryBadgeClass(category) {
   if (catLower.includes('droppii') || catLower.includes('partner')) return 'badge-secondary';
   if (catLower.includes('sales') || catLower.includes('bán hàng') || catLower.includes('tiktok')) return 'badge-neutral';
   return 'badge-primary';
+}
+
+function renderThumbnailHtml(article, basePath = '') {
+  const rawImg = article.thumbnail || article.featuredImage;
+
+  if (rawImg && typeof rawImg === 'string' && rawImg.trim()) {
+    let src = rawImg.trim();
+    if (!src.startsWith('http://') && !src.startsWith('https://') && !src.startsWith('data:')) {
+      if (src.startsWith('/')) {
+        src = `${basePath}${src.slice(1)}`;
+      } else {
+        src = `${basePath}${src}`;
+      }
+    }
+    const safeTitle = escapeHtml(article.title || 'Bài viết');
+    const defaultFallback = `${basePath}assets/images/article-default.svg`;
+
+    return `
+      <div class="post-thumbnail-wrapper" aria-hidden="true">
+        <img 
+          src="${src}" 
+          alt="${safeTitle}" 
+          class="post-thumbnail-img"
+          width="72"
+          height="72"
+          loading="lazy"
+          decoding="async"
+          onerror="this.onerror=null; this.src='${defaultFallback}';"
+        >
+      </div>
+    `;
+  }
+
+  return `
+    <div class="post-thumbnail-placeholder" aria-hidden="true">
+      ${getThumbnailSvg(article.thumbnailIcon, article.category)}
+    </div>
+  `;
 }
 
 function getThumbnailSvg(type, categoryName = 'KDOL') {
