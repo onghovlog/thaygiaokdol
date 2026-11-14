@@ -34,28 +34,48 @@ export function renderHeader(containerSelector = '#site-header', options = {}) {
           src="${logoSrc}" 
           alt="${SITE_CONFIG.brand.name}" 
           class="header-logo-img"
-          width="190" 
-          height="35"
+          width="180" 
+          height="34"
           decoding="async"
         >
       </a>
 
-      <!-- NÚT HAMBURGER MENU VỚI ARIA HOÀN CHỈNH -->
-      <button 
-        type="button" 
-        class="menu-toggle-btn" 
-        id="menu-toggle-btn"
-        aria-label="Mở menu điều hướng" 
-        aria-expanded="false" 
-        aria-controls="nav-drawer"
-        aria-haspopup="dialog"
-      >
-        <svg class="icon-hamburger" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
+      <!-- CỤM HÀNH ĐỘNG BÊN PHẢI: NÚT MUA HÀNG + NÚT MENU -->
+      <div class="header-right-actions">
+        <!-- NÚT MUA HÀNG LIÊN KẾT SIEUTHIVINA.COM -->
+        <a 
+          href="https://sieuthivina.com" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="btn-header-buy"
+          title="Mua hàng tại sieuthivina.com (Mở trong tab mới)"
+          aria-label="Mua hàng tại Siêu Thị Vina"
+        >
+          <svg class="icon-cart" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>Mua hàng</span>
+        </a>
+
+        <!-- NÚT HAMBURGER MENU VỚI ARIA HOÀN CHỈNH -->
+        <button 
+          type="button" 
+          class="menu-toggle-btn" 
+          id="menu-toggle-btn"
+          aria-label="Mở menu điều hướng" 
+          aria-expanded="false" 
+          aria-controls="nav-drawer"
+          aria-haspopup="dialog"
+        >
+          <svg class="icon-hamburger" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
     </div>
   `;
 
@@ -171,6 +191,16 @@ function mountNavigationDrawer(basePath, currentFileName) {
       <div class="drawer-section-title">Liên kết nhanh</div>
       <nav class="drawer-nav-secondary" aria-label="Menu phụ">
         ${secondaryLinksHtml}
+        <a 
+          href="https://sieuthivina.com" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="drawer-nav-sublink"
+          style="color: var(--color-primary); font-weight: 600; display: flex; align-items: center; justify-content: space-between;"
+        >
+          <span>🛒 Mua hàng (sieuthivina.com)</span>
+          <span style="font-size: 11px;">↗</span>
+        </a>
       </nav>
     </div>
 
