@@ -23,6 +23,9 @@ const { globalApiRateLimiter } = require('./middleware/rateLimiter');
 
 const app = express();
 
+// Kích hoạt tin cậy reverse proxy (Nginx trên aaPanel / VPS)
+app.set('trust proxy', 1);
+
 // ==========================================
 // 1. Tắt X-Powered-By để tránh lộ thông tin máy chủ
 // ==========================================
